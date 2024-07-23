@@ -1,0 +1,25 @@
+//le model User qui doit heriter de AbstractUser
+-email
+-mot de passe
+
+//le model Forum
+-nom du forum
+-category du forum
+-date de creation du forum
+
+
+//Model Thread
+-id utilisateur(cle etrangere de User)
+-date de creation du Thread
+-id de la category(Clee etrangere de Category)
+
+//Model Message
+-Titre du message
+-Contenu du message
+-date de publication du message
+-id utilisateur (Cle etrangere de User)
+-Id du Thread(clee etrangere de Thread)
+
+//Model Category
+-nom de la category
+
