@@ -15,11 +15,17 @@ class Forum(models.Model):
     date_created = models.DateField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.nom
+
 
 class Category(models.Model):
     nom = models.CharField(max_length=20)
     description = models.TextField(max_length=50)
     identifiant_forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name="categories")
+
+    def __str__(self):
+        return self.nom
 
 
 class Thread(models.Model):
@@ -27,6 +33,9 @@ class Thread(models.Model):
     identifiant_category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="threads")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.created_at + "" + self.identifiant_category
 
 
 class Message(models.Model):
@@ -36,3 +45,6 @@ class Message(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     posted_by = models.ForeignKey(ForumUser, on_delete=models.CASCADE, related_name="messages_users")
     thread_in = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name="messages")
+
+    def __str__(self):
+        return self.titre
