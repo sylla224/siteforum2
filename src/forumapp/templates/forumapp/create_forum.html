@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %} Creation Forum {% endblock %}
+
+{% block content %}
+<form method="post">
+    <h1>Creation d'un Forum</h1>
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if form.nom.errors %}
+    <div class="alert alert-danger">
+        {{ form.nom.errors }}
+    </div>
+    {% endif %}
+    <button type="submit">Creer</button>
+
+</form>
+{% endblock %}
+
+
+

@@ -31,7 +31,7 @@
                             Forum
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Creation</a></li>
+                            <li><a class="dropdown-item" href="{% url 'forumapp:create_forum' %}">Creation</a></li>
                             <li><a class="dropdown-item" href="#">Connexion</a></li>
 <!--                            <li>-->
 <!--                                <hr class="dropdown-divider">-->
@@ -41,6 +41,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'accounts:logout' %}" >Deconnexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" >{{ user.email }}</a>
                     </li>
                      {% else %}
                      <li class="nav-item">

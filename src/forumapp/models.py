@@ -5,12 +5,23 @@ from django.template.defaultfilters import slugify
 from account.models import ForumUser
 
 
+class Category(models.Model):
+    nom = models.CharField(max_length=20)
+    description = models.TextField(max_length=50)
+
+    # identifiant_forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name="categories")
+
+    def __str__(self):
+        return f"{self.nom}"
+
+
 class Forum(models.Model):
-    nom = models.CharField(max_length=50)
+    nom = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=50, unique=True)
     description = models.TextField(max_length=100)
     date_created = models.DateField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
+    identifiant_category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="forums", default="")
 
     def __str__(self):
         return f"{self.nom}"
@@ -19,15 +30,6 @@ class Forum(models.Model):
         if not self.slug:
             self.slug = slugify(self.nom)
         super().save(*args, **kwargs)
-
-
-class Category(models.Model):
-    nom = models.CharField(max_length=20)
-    description = models.TextField(max_length=50)
-    identifiant_forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name="categories")
-
-    def __str__(self):
-        return f"{self.nom}"
 
 
 class Thread(models.Model):
