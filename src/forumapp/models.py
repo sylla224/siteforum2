@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.templatetags.static import static
 
 from account.models import ForumUser
 
@@ -24,12 +25,30 @@ class Forum(models.Model):
     identifiant_category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="forums", default="")
 
     def __str__(self):
-        return f"{self.nom}"
+        return f"{self.slug}"
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.nom)
         super().save(*args, **kwargs)
+
+
+class MemberForum(models.Model):
+    user = models.ForeignKey(ForumUser, on_delete=models.CASCADE, related_name="users")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    avatar = models.ImageField(upload_to='photos/', blank=True)
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name="forums")
+
+    def __str__(self):
+        return f"{self.user} {self.forum}"
+
+    def __repr__(self):
+        return f"MemberForum(user={self.user}, created_at={self.created_at}, updated_at={self.updated_at}," \
+               f"forum={self.forum} )"
+
+    def avatar_tag(self):
+        return self.avatar.url if self.avatar else static("img/default.png")
 
 
 class Thread(models.Model):

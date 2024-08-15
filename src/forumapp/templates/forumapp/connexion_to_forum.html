@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} Connexion Forum {% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    <h1>Connexion au un Forum</h1>
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if form.instance.avatar %}
+        <div>
+            <img src="{{ form.instance.avatar.url }}" alt="Avatar" style="max-width: 200px;">
+            <br>
+            <a href="{{ form.instance.avatar.url }}" download>Download Avatar</a>
+        </div>
+    {% endif %}
+    {% if form.nom.errors %}
+    <div class="alert alert-danger">
+        {{ form.nom.errors }}
+    </div>
+    {% endif %}
+    <button type="submit">Se connecter</button>
+
+</form>
+{% endblock %}
