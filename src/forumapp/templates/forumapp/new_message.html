@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %} Acceuil {% endblock %}
+
+{% block content %}
+
+<h3> Bienveu sur la page d'acceuil du site</h3>
+
+<form method="post" action="{% url 'forumapp:post_forum_messages' %}">
+    {{ form.as_p }}
+    {% csrf_token %}
+    {% if form.nom.errors %}
+    <div class="alert alert-danger">
+        {{ form.nom.errors }}
+    </div>
+    {% endif %}
+    <button type="submit">Creer</button>
+</form>
+{% endblock %}

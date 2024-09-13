@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from forumapp.models import Forum, Category, MemberForum
+from forumapp.models import Forum, Category, MemberForum, Message
 from account.models import ForumUser
 
 
@@ -32,3 +32,15 @@ class ConnexionForum(forms.ModelForm):
     class Meta:
         model = MemberForum
         fields = ['forum']
+
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['titre', 'contenu']
+
+
+# class MessageReplyForm(forms.ModelForm):
+#     class Meta:
+#         model = Message
+#         fields = ['']

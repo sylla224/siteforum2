@@ -53,13 +53,13 @@ class MemberForum(models.Model):
 
 class Thread(models.Model):
     name = models.CharField(max_length=20)
-    created_by = models.ForeignKey(ForumUser, on_delete=models.CASCADE, related_name="threads")
-    identifiant_category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="threads")
+    created_by = models.ForeignKey(ForumUser, on_delete=models.CASCADE, related_name="threadss")
+    identifiant_forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name="threads", default="1")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} {self.identifiant_category}"
+        return f"{self.name} {self.identifiant_forum}"
 
 
 class Message(models.Model):
@@ -69,6 +69,7 @@ class Message(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     posted_by = models.ForeignKey(ForumUser, on_delete=models.CASCADE, related_name="messages_users")
     thread_in = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name="messages")
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
 
     def __str__(self):
         return f"{self.titre}"
